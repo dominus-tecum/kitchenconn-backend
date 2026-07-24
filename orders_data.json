@@ -1,5 +1,100 @@
 {
-  "date": "2026-07-22",
-  "counter": 0,
-  "orders": []
+  "date": "2026-07-23",
+  "counter": 5,
+  "orders": [
+    {
+      "id": 1,
+      "items": [
+        1,
+        1,
+        1
+      ],
+      "item_names": [
+        "Special Pizza",
+        "Special Pizza",
+        "Special Pizza"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "07:07 PM",
+      "date": "2026-07-23",
+      "status": "served",
+      "confirmed_at": "07:21 PM",
+      "ready_at": "07:21 PM",
+      "served_at": "07:21 PM"
+    },
+    {
+      "id": 2,
+      "items": [
+        5,
+        5,
+        5
+      ],
+      "item_names": [
+        "Special Burger",
+        "Special Burger",
+        "Special Burger"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "07:20 PM",
+      "date": "2026-07-23",
+      "status": "confirmed",
+      "confirmed_at": "07:20 PM",
+      "ready_at": null,
+      "served_at": null
+    },
+    {
+      "id": 3,
+      "items": [
+        5,
+        5,
+        5
+      ],
+      "item_names": [
+        "Special Burger",
+        "Special Burger",
+        "Special Burger"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "07:39 PM",
+      "date": "2026-07-23",
+      "status": "confirmed",
+      "confirmed_at": "07:39 PM",
+      "ready_at": null,
+      "served_at": null
+    },
+    {
+      "id": 4,
+      "items": [
+        5,
+        5
+      ],
+      "item_names": [
+        "Vegitable Pizza",
+        "Vegitable Pizza"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "07:49 PM",
+      "date": "2026-07-23",
+      "status": "served",
+      "confirmed_at": "07:49 PM",
+      "ready_at": "07:50 PM",
+      "served_at": "07:50 PM"
+    },
+    {
+      "id": 5,
+      "items": [
+        9
+      ],
+      "item_names": [
+        "Cheese Burger"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "07:50 PM",
+      "date": "2026-07-23",
+      "status": "pending",
+      "confirmed_at": null,
+      "ready_at": null,
+      "served_at": null
+    }
+  ]
 }

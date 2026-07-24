@@ -35,14 +35,16 @@ order_counter = data["counter"]
 MENU = [
     {"id": 1, "name": "Special Pizza"},
     {"id": 2, "name": "Meat Lovers (Beef) Pizza"},
-    {"id": 3, "name": "Tuna Pizza"},
-    {"id": 4, "name": "Margarita Pizza"},
-    {"id": 5, "name": "Special Burger"},
-    {"id": 6, "name": "Double Burger"},
-    {"id": 7, "name": "Cheese Burger"},
-    {"id": 8, "name": "Beef Burger"},
-    {"id": 9, "name": "Egg Sandwich"},
-    {"id": 10, "name": "Tuna With Cheese Sandwich"},
+    {"id": 3, "name": "Al Tuna Pizza (Tuna with cheese)"},
+    {"id": 4, "name": "Tuna Pizza (Tuna without cheese)"},
+    {"id": 5, "name": "Vegetable Pizza"},
+    {"id": 6, "name": "Margarita Pizza"},
+    {"id": 7, "name": "Special Burger"},
+    {"id": 8, "name": "Double Burger"},
+    {"id": 9, "name": "Cheese Burger"},
+    {"id": 10, "name": "Beef Burger"},
+    {"id": 11, "name": "Egg Sandwich"},
+    {"id": 12, "name": "Tuna With Cheese Sandwich"},
 ]
 
 def get_item_names(item_ids: List[int]) -> List[str]:
