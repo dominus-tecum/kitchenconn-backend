@@ -2,6 +2,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from app.services.order_service import OrderService, MENU
 from app.services.websocket_manager import ConnectionManager
+from main import send_push_notification  # ← ADD THIS
 
 router = APIRouter()
 ws_manager = ConnectionManager()
@@ -20,10 +21,21 @@ async def get_menu():
 async def place_order(waiter: str, items: List[int]):
     try:
         order = OrderService.place_order(waiter, items)
+        
+        # 🔥 Broadcast to chefs via WebSocket
         await ws_manager.broadcast_to_chefs({
             "type": "NEW_ORDER",
             "order": order
         })
+        
+        # 🔥 Send push notification to chefs
+        send_push_notification(
+            title='🔔 New Order!',
+            body=f'Order #{order["id"]} from {waiter}',
+            data={'orderId': order["id"], 'type': 'new_order'},
+            role='chef'
+        )
+        
         return {"success": True, "order_id": order["id"]}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -33,10 +45,12 @@ async def confirm_order(order_id: int):
     order = OrderService.confirm_order(order_id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
+    
     await ws_manager.broadcast_to_waiters({
         "type": "ORDER_CONFIRMED",
         "order_id": order_id
     })
+    
     return {"success": True}
 
 @router.post("/orders/{order_id}/ready")
@@ -44,11 +58,22 @@ async def mark_ready(order_id: int):
     order = OrderService.mark_ready(order_id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
+    
+    # 🔥 Broadcast to waiters via WebSocket
     await ws_manager.broadcast_to_waiters({
         "type": "ORDER_READY",
         "order_id": order_id,
         "order": order
     })
+    
+    # 🔥 Send push notification to waiters
+    send_push_notification(
+        title='✅ Order Ready!',
+        body=f'Order #{order_id} is ready to serve',
+        data={'orderId': order_id, 'type': 'order_ready'},
+        role='waiter'
+    )
+    
     return {"success": True}
 
 @router.post("/orders/{order_id}/serve")
@@ -56,10 +81,12 @@ async def serve_order(order_id: int):
     order = OrderService.serve_order(order_id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
+    
     await ws_manager.broadcast_to_waiters({
         "type": "ORDER_SERVED",
         "order_id": order_id
     })
+    
     return {"success": True}
 
 @router.get("/orders/pending")

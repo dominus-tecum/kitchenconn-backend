@@ -1,96 +1,124 @@
 {
-  "date": "2026-07-23",
-  "counter": 5,
+  "date": "2026-07-24",
+  "counter": 7,
   "orders": [
     {
       "id": 1,
       "items": [
-        1,
-        1,
-        1
+        4,
+        4,
+        4,
+        4
       ],
       "item_names": [
-        "Special Pizza",
-        "Special Pizza",
-        "Special Pizza"
+        "Tuna Pizza (Tuna without cheese)",
+        "Tuna Pizza (Tuna without cheese)",
+        "Tuna Pizza (Tuna without cheese)",
+        "Tuna Pizza (Tuna without cheese)"
       ],
       "waiter": "Cashier",
-      "timestamp": "07:07 PM",
-      "date": "2026-07-23",
-      "status": "served",
-      "confirmed_at": "07:21 PM",
-      "ready_at": "07:21 PM",
-      "served_at": "07:21 PM"
+      "timestamp": "07:54 PM",
+      "date": "2026-07-24",
+      "status": "confirmed",
+      "confirmed_at": "08:03 PM",
+      "ready_at": null,
+      "served_at": null
     },
     {
       "id": 2,
       "items": [
-        5,
-        5,
-        5
+        1
       ],
       "item_names": [
-        "Special Burger",
-        "Special Burger",
-        "Special Burger"
+        "Special Pizza"
       ],
       "waiter": "Cashier",
-      "timestamp": "07:20 PM",
-      "date": "2026-07-23",
+      "timestamp": "08:06 PM",
+      "date": "2026-07-24",
       "status": "confirmed",
-      "confirmed_at": "07:20 PM",
+      "confirmed_at": "08:06 PM",
       "ready_at": null,
       "served_at": null
     },
     {
       "id": 3,
       "items": [
-        5,
-        5,
         5
       ],
       "item_names": [
-        "Special Burger",
-        "Special Burger",
-        "Special Burger"
+        "Vegetable Pizza"
       ],
       "waiter": "Cashier",
-      "timestamp": "07:39 PM",
-      "date": "2026-07-23",
+      "timestamp": "08:11 PM",
+      "date": "2026-07-24",
       "status": "confirmed",
-      "confirmed_at": "07:39 PM",
+      "confirmed_at": "08:11 PM",
       "ready_at": null,
       "served_at": null
     },
     {
       "id": 4,
       "items": [
-        5,
-        5
+        4
       ],
       "item_names": [
-        "Vegitable Pizza",
-        "Vegitable Pizza"
+        "Tuna Pizza (Tuna without cheese)"
       ],
       "waiter": "Cashier",
-      "timestamp": "07:49 PM",
-      "date": "2026-07-23",
-      "status": "served",
-      "confirmed_at": "07:49 PM",
-      "ready_at": "07:50 PM",
-      "served_at": "07:50 PM"
+      "timestamp": "08:16 PM",
+      "date": "2026-07-24",
+      "status": "pending",
+      "confirmed_at": null,
+      "ready_at": null,
+      "served_at": null
     },
     {
       "id": 5,
       "items": [
-        9
+        3
       ],
       "item_names": [
-        "Cheese Burger"
+        "Al Tuna Pizza (Tuna with cheese)"
       ],
       "waiter": "Cashier",
-      "timestamp": "07:50 PM",
-      "date": "2026-07-23",
+      "timestamp": "08:19 PM",
+      "date": "2026-07-24",
+      "status": "pending",
+      "confirmed_at": null,
+      "ready_at": null,
+      "served_at": null
+    },
+    {
+      "id": 6,
+      "items": [
+        5,
+        5,
+        5
+      ],
+      "item_names": [
+        "Vegetable Pizza",
+        "Vegetable Pizza",
+        "Vegetable Pizza"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "08:42 PM",
+      "date": "2026-07-24",
+      "status": "confirmed",
+      "confirmed_at": "08:42 PM",
+      "ready_at": null,
+      "served_at": null
+    },
+    {
+      "id": 7,
+      "items": [
+        11
+      ],
+      "item_names": [
+        "Egg Sandwich"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "08:42 PM",
+      "date": "2026-07-24",
       "status": "pending",
       "confirmed_at": null,
       "ready_at": null,
