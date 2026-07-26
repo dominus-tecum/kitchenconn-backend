@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from app.services.order_service import OrderService, MENU
 from app.services.websocket_manager import ConnectionManager
-from main import send_push_notification  # ← ADD THIS
+from app.services.push_service import send_push_notification
 
 router = APIRouter()
 ws_manager = ConnectionManager()
