@@ -38,7 +38,7 @@ def send_push_notification(title: str, body: str, data: dict = None, role: str =
             'to': token,
             'title': title,
             'body': body,
-            'sound': 'default',
+            'sound': 'notification.mp3',
             'priority': 'high',  # 🔥 Critical for waking device
             'data': data,
         }

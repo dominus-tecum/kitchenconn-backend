@@ -1,8 +1,12 @@
 from typing import List
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.responses import StreamingResponse
 from app.services.order_service import OrderService, MENU
 from app.services.websocket_manager import ConnectionManager
 from app.services.push_service import send_push_notification
+import csv
+import io
+from datetime import datetime
 
 router = APIRouter()
 ws_manager = ConnectionManager()
@@ -22,13 +26,11 @@ async def place_order(waiter: str, items: List[int]):
     try:
         order = OrderService.place_order(waiter, items)
         
-        # 🔥 Broadcast to chefs via WebSocket
         await ws_manager.broadcast_to_chefs({
             "type": "NEW_ORDER",
             "order": order
         })
         
-        # 🔥 Send push notification to chefs
         send_push_notification(
             title='🔔 New Order!',
             body=f'Order #{order["id"]} from {waiter}',
@@ -59,14 +61,12 @@ async def mark_ready(order_id: int):
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     
-    # 🔥 Broadcast to waiters via WebSocket
     await ws_manager.broadcast_to_waiters({
         "type": "ORDER_READY",
         "order_id": order_id,
         "order": order
     })
     
-    # 🔥 Send push notification to waiters
     send_push_notification(
         title='✅ Order Ready!',
         body=f'Order #{order_id} is ready to serve',
@@ -116,6 +116,58 @@ async def delete_order(order_id: int):
 @router.get("/orders/stats")
 async def get_stats():
     return OrderService.get_stats()
+
+# ============================================================
+# SUMMARY & EXPORT
+# ============================================================
+
+@router.get("/orders/summary/today")
+async def get_today_summary():
+    """Get summary of today's orders - simplified"""
+    today = datetime.now().strftime("%Y-%m-%d")
+    orders = OrderService.get_today_orders()
+    
+    item_counts = {}
+    for order in orders:
+        for name in order["item_names"]:
+            item_counts[name] = item_counts.get(name, 0) + 1
+    
+    sorted_items = sorted(item_counts.items(), key=lambda x: x[1], reverse=True)
+    
+    return {
+        "date": today,
+        "total_orders": len(orders),
+        "items": [{"name": name, "count": count} for name, count in sorted_items]
+    }
+
+@router.get("/orders/export/csv")
+async def export_orders_csv():
+    """Export all orders as CSV file"""
+    orders = OrderService.get_all()
+    
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['Order ID', 'Waiter', 'Items', 'Status', 'Date', 'Time', 'Confirmed At', 'Ready At', 'Served At'])
+    
+    for order in orders:
+        writer.writerow([
+            order['id'],
+            order['waiter'],
+            '; '.join(order['item_names']),
+            order['status'],
+            order.get('date', ''),
+            order['timestamp'],
+            order.get('confirmed_at', ''),
+            order.get('ready_at', ''),
+            order.get('served_at', '')
+        ])
+    
+    output.seek(0)
+    return StreamingResponse(
+        output,
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename=orders_{datetime.now().strftime('%Y-%m-%d')}.csv"}
+    )
 
 # ============================================================
 # WEBSOCKETS
