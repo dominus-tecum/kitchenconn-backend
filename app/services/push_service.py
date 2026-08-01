@@ -1,17 +1,52 @@
 import requests
+import json
+import os
 from typing import List, Dict, Any
 
-# Store push tokens (in-memory - use Redis/DB in production)
-push_tokens = []  # List of {token: str, role: str}
+# Persistent storage path
+DATA_DIR = os.environ.get('DATA_DIR', 'data')
+TOKENS_FILE = os.path.join(DATA_DIR, 'push_tokens.json')
+
+# Ensure data directory exists
+os.makedirs(DATA_DIR, exist_ok=True)
+
+def load_tokens():
+    """Load push tokens from persistent storage"""
+    try:
+        if os.path.exists(TOKENS_FILE):
+            with open(TOKENS_FILE, 'r') as f:
+                tokens = json.load(f)
+                print(f'📱 Loaded {len(tokens)} tokens from storage')
+                return tokens
+    except Exception as e:
+        print(f'⚠️ Error loading tokens: {e}')
+    return []
+
+def save_tokens(tokens):
+    """Save push tokens to persistent storage"""
+    try:
+        with open(TOKENS_FILE, 'w') as f:
+            json.dump(tokens, f, indent=2)
+        print(f'💾 Tokens saved to {TOKENS_FILE}')
+    except Exception as e:
+        print(f'❌ Error saving tokens: {e}')
+
+# Load tokens from persistent storage
+push_tokens = load_tokens()
 
 def register_push_token(token: str, role: str) -> Dict[str, Any]:
     """Register a device push token"""
+    global push_tokens
+    
     # Check if token already exists
     existing = next((t for t in push_tokens if t['token'] == token), None)
     if existing:
         existing['role'] = role
     else:
         push_tokens.append({'token': token, 'role': role})
+    
+    # Save to persistent storage
+    save_tokens(push_tokens)
     
     print(f'✅ Push token registered: {token[:20]}... for role: {role}')
     return {"success": True, "message": "Token registered"}

@@ -1,5 +1,24 @@
 {
-  "date": "2026-07-27",
-  "counter": 0,
-  "orders": []
+  "date": "2026-08-01",
+  "counter": 1,
+  "orders": [
+    {
+      "id": 1,
+      "items": [
+        1,
+        1
+      ],
+      "item_names": [
+        "Special Pizza",
+        "Special Pizza"
+      ],
+      "waiter": "Cashier",
+      "timestamp": "05:22 PM",
+      "date": "2026-08-01",
+      "status": "pending",
+      "confirmed_at": null,
+      "ready_at": null,
+      "served_at": null
+    }
+  ]
 }

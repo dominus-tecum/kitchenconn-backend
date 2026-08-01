@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import router
@@ -5,6 +6,11 @@ from app.config import settings
 from app.services.push_service import register_push_token, get_all_tokens, send_push_notification, push_tokens
 from pydantic import BaseModel
 from typing import Optional, List
+
+# ============================================================
+# SET DATA DIRECTORY FOR PERSISTENT STORAGE
+# ============================================================
+os.environ['DATA_DIR'] = '/opt/render/project/src/data'
 
 # ============================================================
 # PUSH NOTIFICATION MODELS
