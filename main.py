@@ -35,7 +35,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "*",
-        "https://caca-196-189-154-137.ngrok-free.app",
+        " https://08bf-196-189-56-125.ngrok-free.app",
         "http://localhost:19000",
         "http://localhost:19006",
     ],
@@ -71,7 +71,7 @@ async def root():
         "app": settings.APP_NAME,
         "version": settings.APP_VERSION,
         "status": "running",
-        "ngrok_url": "https://caca-196-189-154-137.ngrok-free.app",
+        "ngrok_url": "https://08bf-196-189-56-125.ngrok-free.app",
         "push_tokens_registered": len(push_tokens),
         "endpoints": [
             "GET  /",
@@ -84,7 +84,7 @@ async def root():
 async def health_check():
     return {
         "status": "healthy",
-        "ngrok_url": "https://caca-196-189-154-137.ngrok-free.app",
+        "ngrok_url": "https://08bf-196-189-56-125.ngrok-free.app",
         "push_tokens": len(push_tokens)
     }
 
@@ -95,11 +95,11 @@ if __name__ == "__main__":
     print("=" * 50)
     print("📋 Menu: 18 items loaded")
     print("🌐 http://localhost:8000")
-    print("🔗 ngrok: https://caca-196-189-154-137.ngrok-free.app")
+    print("🔗 ngrok:  https://08bf-196-189-56-125.ngrok-free.app")
     print("📡 WebSocket routes:")
     print("   - ws://localhost:8000/ws/chef")
-    print("   - wss://caca-196-189-154-137.ngrok-free.app/ws/chef")
+    print("   - wss://08bf-196-189-56-125.ngrok-free.app/ws/chef")
     print("   - ws://localhost:8000/ws/waiter")
-    print("   - wss://caca-196-189-154-137.ngrok-free.app/ws/waiter")
+    print("   - wss://08bf-196-189-56-125.ngrok-free.app/ws/waiter")
     print("=" * 50)
     uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -74,7 +74,8 @@ def send_push_notification(title: str, body: str, data: dict = None, role: str =
             'title': title,
             'body': body,
             'sound': 'notification.mp3',
-            'priority': 'high',  # 🔥 Critical for waking device
+            'priority': 'high',
+            'channelId': 'chef-alerts',  # 🔥 ADD THIS LINE
             'data': data,
         }
         
