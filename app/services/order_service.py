@@ -33,20 +33,30 @@ orders = data["orders"]
 order_counter = data["counter"]
 
 MENU = [
-    {"id": 1, "name": "Special Pizza"},
-    {"id": 2, "name": "Meat Lovers (Beef) Pizza"},
-    {"id": 3, "name": "Al Tuna Pizza (Tuna with cheese)"},
-    {"id": 4, "name": "Tuna Pizza (Tuna without cheese)"},
-    {"id": 5, "name": "Vegetable Pizza"},
-    {"id": 6, "name": "Margarita Pizza"},
-    {"id": 7, "name": "Special Burger"},
-    {"id": 8, "name": "Double Burger"},
-    {"id": 9, "name": "Cheese Burger"},
-    {"id": 10, "name": "Beef Burger"},
-    {"id": 11, "name": "Egg Sandwich"},
-    {"id": 12, "name": "Tuna With Cheese Sandwich"},
+    {"id": 1, "name": "Special Pizza", "nameAm": "ስፔሻል ፒዛ"},
+    {"id": 2, "name": "Meat Lovers (Beef) Pizza", "nameAm": "ሚት ላቨርስ ፒዛ"},
+    {"id": 3, "name": "Al Tuna Pizza (Tuna with cheese)", "nameAm": "አል ቱና ፒዛ"},
+    {"id": 4, "name": "Tuna Pizza (Tuna without cheese)", "nameAm": "ቱና ፒዛ"},
+    {"id": 5, "name": "Vegetable Pizza", "nameAm": "ቬጂቴብል ፒዛ"},
+    {"id": 6, "name": "Margarita Pizza", "nameAm": "ማርጋሪታ ፒዛ"},
+    {"id": 7, "name": "Special Burger", "nameAm": "ስፔሻል በርገር"},
+    {"id": 8, "name": "Double Burger", "nameAm": "ድብል በርገር"},
+    {"id": 9, "name": "Cheese Burger", "nameAm": "ቺዝ በርገር"},
+    {"id": 10, "name": "Beef Burger", "nameAm": "ቢፍ በርገር"},
+    {"id": 11, "name": "Egg Sandwich", "nameAm": "ኤግ ሳንድዊች"},
+    {"id": 12, "name": "Tuna With Cheese Sandwich", "nameAm": "ቱና ዊዝ ቺዝ ሳንድዊች"},
+    {"id": 13, "name": "Chicken Burger", "nameAm": "ቺክን በርገር"},
+    {"id": 14, "name": "Hummus Pizza", "nameAm": "ሁመስ ፒዛ"},
+    {"id": 15, "name": "Special Fasting Pizza", "nameAm": "ስፔሻል ፆም ፒዛ"},
+    {"id": 16, "name": "Chicken Wrap", "nameAm": "ቺክን ራፕ"},
+    {"id": 17, "name": "Veggie Wrap", "nameAm": "ቬጂ ራፕ"},
+    {"id": 18, "name": "Special Veggie Wrap", "nameAm": "ስፔሻል ቬጂ ራፕ"},
+    {"id": 19, "name": "Hummus", "nameAm": "ሁመስ"},
+    {"id": 20, "name": "Tuna Sandwich", "nameAm": "ቱና ሳንድዊች"},
+    {"id": 21, "name": "Tuna Wrap", "nameAm": "ቱና ራፕ"},
+    {"id": 22, "name": "Veggie Sandwich", "nameAm": "ቬጂ ሳንድዊች"},
+    {"id": 23, "name": "Avocado Toast", "nameAm": "አቮካዶ ቶስት"},
 ]
-
 def get_item_names(item_ids: List[int]) -> List[str]:
     names = []
     for item_id in item_ids:
