@@ -57,12 +57,22 @@ MENU = [
     {"id": 22, "name": "Veggie Sandwich", "nameAm": "ቬጂ ሳንድዊች"},
     {"id": 23, "name": "Avocado Toast", "nameAm": "አቮካዶ ቶስት"},
 ]
+
 def get_item_names(item_ids: List[int]) -> List[str]:
     names = []
     for item_id in item_ids:
         for item in MENU:
             if item["id"] == item_id:
                 names.append(item["name"])
+                break
+    return names
+
+def get_item_names_am(item_ids: List[int]) -> List[str]:
+    names = []
+    for item_id in item_ids:
+        for item in MENU:
+            if item["id"] == item_id:
+                names.append(item["nameAm"])
                 break
     return names
 
@@ -93,6 +103,7 @@ class OrderService:
             "id": order_counter,
             "items": items,
             "item_names": get_item_names(items),
+            "item_names_am": get_item_names_am(items),  # ← ADDED THIS
             "waiter": waiter,
             "timestamp": datetime.now().strftime("%I:%M %p"),
             "date": today,
