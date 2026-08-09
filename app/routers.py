@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 from app.services.order_service import OrderService, MENU
@@ -7,9 +7,21 @@ from app.services.push_service import send_push_notification
 import csv
 import io
 from datetime import datetime
+from pydantic import BaseModel
 
 router = APIRouter()
 ws_manager = ConnectionManager()
+
+
+# ============================================================
+# PYDANTIC MODEL - ADD THIS
+# ============================================================
+class OrderRequest(BaseModel):
+    waiter: str
+    items: List[int]
+    item_names: Optional[List[str]] = None
+    item_names_am: Optional[List[str]] = None
+
 
 # ============================================================
 # MENU
@@ -22,9 +34,19 @@ async def get_menu():
 # ORDERS
 # ============================================================
 @router.post("/orders")
-async def place_order(waiter: str, items: List[int]):
+async def place_order(order_data: OrderRequest):
     try:
-        order = OrderService.place_order(waiter, items)
+        # If item_names and item_names_am are provided, use them
+        if order_data.item_names is not None and order_data.item_names_am is not None:
+            order = OrderService.place_order_with_names(
+                waiter=order_data.waiter,
+                items=order_data.items,
+                item_names=order_data.item_names,
+                item_names_am=order_data.item_names_am
+            )
+        else:
+            # Legacy: use the menu to look up names
+            order = OrderService.place_order(order_data.waiter, order_data.items)
         
         await ws_manager.broadcast_to_chefs({
             "type": "NEW_ORDER",
@@ -33,7 +55,7 @@ async def place_order(waiter: str, items: List[int]):
         
         send_push_notification(
             title='🔔 New Order!',
-            body=f'Order #{order["id"]} from {waiter}',
+            body=f'Order #{order["id"]} from {order_data.waiter}',
             data={'orderId': order["id"], 'type': 'new_order'},
             role='chef'
         )
@@ -41,6 +63,7 @@ async def place_order(waiter: str, items: List[int]):
         return {"success": True, "order_id": order["id"]}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+
 
 @router.post("/orders/{order_id}/confirm")
 async def confirm_order(order_id: int):

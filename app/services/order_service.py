@@ -211,3 +211,41 @@ class OrderService:
             "served": served,
             "popularItems": popular
         }
+
+
+
+
+    @staticmethod
+    def place_order_with_names(waiter: str, items: List[int], item_names: List[str], item_names_am: List[str]) -> dict:
+        global order_counter, orders, data
+        
+        if not items:
+            raise ValueError("No items in order")
+        
+        # Check if new day
+        today = datetime.now().strftime("%Y-%m-%d")
+        if data["date"] != today:
+            data["date"] = today
+            data["counter"] = 0
+            data["orders"] = []
+            orders = data["orders"]
+        
+        data["counter"] += 1
+        order_counter = data["counter"]
+        order = {
+            "id": order_counter,
+            "items": items,
+            "item_names": item_names,
+            "item_names_am": item_names_am,
+            "waiter": waiter,
+            "timestamp": datetime.now().strftime("%I:%M %p"),
+            "date": today,
+            "status": "pending",
+            "confirmed_at": None,
+            "ready_at": None,
+            "served_at": None
+        }
+        data["orders"].append(order)
+        orders = data["orders"]
+        save_data(data)
+        return order    
