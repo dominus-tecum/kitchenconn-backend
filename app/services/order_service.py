@@ -43,7 +43,7 @@ MENU = [
     {"id": 8, "name": "Double Burger", "nameAm": "ድብል በርገር"},
     {"id": 9, "name": "Cheese Burger", "nameAm": "ቺዝ በርገር"},
     {"id": 10, "name": "Beef Burger", "nameAm": "ቢፍ በርገር"},
-    {"id": 11, "name": "Egg Sandwich", "nameAm": "ኤግ ሳንድዊች"},
+    {"id": 11, "name": "Egg Twist", "nameAm": "ኤግ ትዊስት"},
     {"id": 12, "name": "Tuna With Cheese Sandwich", "nameAm": "ቱና ዊዝ ቺዝ ሳንድዊች"},
     {"id": 13, "name": "Chicken Burger", "nameAm": "ቺክን በርገር"},
     {"id": 14, "name": "Hummus Pizza", "nameAm": "ሁመስ ፒዛ"},
@@ -55,7 +55,11 @@ MENU = [
     {"id": 20, "name": "Tuna Sandwich", "nameAm": "ቱና ሳንድዊች"},
     {"id": 21, "name": "Tuna Wrap", "nameAm": "ቱና ራፕ"},
     {"id": 22, "name": "Veggie Sandwich", "nameAm": "ቬጂ ሳንድዊች"},
-    {"id": 23, "name": "Avocado Toast", "nameAm": "አቮካዶ ቶስት"},
+    {"id": 24, "name": "Club Sandwich", "nameAm": "ክለብ ሳንድዊች"},
+    {"id": 25, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
+    {"id": 27, "name": "Chicken Pesto Sandwich", "nameAm": "ቺክን ፔስቶ ሳንድዊች"},
+    {"id": 28, "name": "Chicken Pesto Wrap", "nameAm": "ቺክን ፔስቶ ራፕ"},
+    {"id": 29, "name": "Fish Sandwich", "nameAm": "ፊሽ ሳንድዊች"},
 ]
 
 def get_item_names(item_ids: List[int]) -> List[str]:
