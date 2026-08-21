@@ -60,6 +60,12 @@ def send_push_notification(title: str, body: str, data: dict = None, role: str =
     if data is None:
         data = {}
     
+    # Determine channel ID based on role
+    if role == 'chef':
+        channel_id = 'orders_v2'
+    else:
+        channel_id = 'ready-orders_v2'
+    
     # Find tokens for the role
     tokens = [t['token'] for t in push_tokens if t['role'] == role]
     
@@ -73,9 +79,9 @@ def send_push_notification(title: str, body: str, data: dict = None, role: str =
             'to': token,
             'title': title,
             'body': body,
-            'sound': 'notification.mp3',
+            'sound': 'default',          # 🔥 CHANGED from 'notification.mp3'
             'priority': 'high',
-            'channelId': 'chef-alerts',  # 🔥 ADD THIS LINE
+            'channelId': channel_id,     # 🔥 CHANGED from 'chef-alerts'
             'data': data,
         }
         
