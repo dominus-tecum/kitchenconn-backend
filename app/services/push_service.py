@@ -83,6 +83,8 @@ def send_push_notification(title: str, body: str, data: dict = None, role: str =
             'priority': 'high',
             'channelId': channel_id,     # 🔥 CHANGED from 'chef-alerts'
             'data': data,
+            'category': 'alarm',  # 🔥 ADD THIS ONE LINE
+            'interruptionLevel': 'critical',  # 🔥 ADD THIS TOO
         }
         
         try:
