@@ -47,6 +47,14 @@ app.add_middleware(
 # Include routes
 app.include_router(router)
 
+
+
+# 🔥 ADD THIS - Print all routes for debugging
+print("\n📋 REGISTERED ROUTES:")
+for route in app.routes:
+    if hasattr(route, 'methods'):
+        print(f"  {route.methods} {route.path}")
+
 # ============================================================
 # PUSH NOTIFICATION ENDPOINTS
 # ============================================================

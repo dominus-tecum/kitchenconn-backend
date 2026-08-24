@@ -141,6 +141,23 @@ async def get_stats():
     return OrderService.get_stats()
 
 # ============================================================
+# START NUMBER MANAGEMENT  ← ADD THIS
+# ============================================================
+class StartNumberRequest(BaseModel):
+    start_number: int
+
+@router.post("/set-start-number")
+async def set_start_number(request: SetStartNumberRequest):
+    try:
+        result = OrderService.set_start_number(request.start_number)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+
+
+# ============================================================
 # SUMMARY & EXPORT
 # ============================================================
 
