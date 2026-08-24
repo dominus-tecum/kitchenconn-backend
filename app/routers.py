@@ -146,7 +146,7 @@ async def get_stats():
 class StartNumberRequest(BaseModel):
     start_number: int
 
-@router.post("/set-start-number")
+@router.post("/orders/set-start-number")
 async def set_start_number(request: StartNumberRequest):
     try:
         result = OrderService.set_start_number(request.start_number)
