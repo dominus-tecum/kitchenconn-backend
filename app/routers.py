@@ -154,7 +154,13 @@ async def set_start_number(request: StartNumberRequest):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-
+# ============================================================
+# START NUMBER STATUS
+# ============================================================
+@router.get("/orders/start-number-status")
+async def get_start_number_status():
+    """Check if start number has been set for today"""
+    return OrderService.get_start_number_status()
 
 
 # ============================================================
@@ -239,3 +245,15 @@ async def websocket_waiter(websocket: WebSocket):
             await websocket.receive_text()
     except WebSocketDisconnect:
         ws_manager.disconnect_waiter(websocket)
+
+class RenumberRequest(BaseModel):
+    new_start_number: int
+
+@router.post("/orders/renumber")
+async def renumber_orders(request: RenumberRequest):
+    """Renumber all existing orders based on new start number"""
+    try:
+        result = OrderService.renumber_orders(request.new_start_number)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))        

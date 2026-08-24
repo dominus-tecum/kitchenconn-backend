@@ -30,7 +30,7 @@ def load_data():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r') as f:
             return json.load(f)
-    return {"date": None, "counter": 0, "orders": [], "start_number": None}
+    return {"date": None, "counter": 0, "orders": [], "start_number": None, "start_number_set_today": False}
 
 def save_data(data):
     with open(DATA_FILE, 'w') as f:
@@ -44,8 +44,9 @@ today = get_current_time().strftime("%Y-%m-%d")
 if data.get("date") != today:
     data["date"] = today
     data["counter"] = 0
-    
+    data["orders"] = []
     data["start_number"] = None
+    data["start_number_set_today"] = False
     save_data(data)
 
 orders = data["orders"]
@@ -134,6 +135,7 @@ class OrderService:
             data["counter"] = 0
             data["orders"] = []
             data["start_number"] = None
+            data["start_number_set_today"] = False
             orders = data["orders"]
         
         valid_ids = [item["id"] for item in MENU]
@@ -228,6 +230,7 @@ class OrderService:
         data["orders"] = []
         data["counter"] = 0
         data["start_number"] = None
+        data["start_number_set_today"] = False
         save_data(data)
         return count
     
@@ -273,6 +276,7 @@ class OrderService:
             data["counter"] = 0
             data["orders"] = []
             data["start_number"] = None
+            data["start_number_set_today"] = False
             orders = data["orders"]
         
         data["counter"] += 1
@@ -312,12 +316,61 @@ class OrderService:
             data["counter"] = 0
             data["orders"] = []
             data["start_number"] = None
+            data["start_number_set_today"] = False
             orders = data["orders"]
         
         # Set the start number
         data["start_number"] = start_number
-        data["counter"] = start_number - 1  # Counter starts one less so first order is start_number
+        data["counter"] = start_number - 1
+        data["start_number_set_today"] = True
         order_counter = data["counter"]
         save_data(data)
         
         return {"success": True, "start_number": start_number}
+
+    @staticmethod
+    def get_start_number_status() -> dict:
+        """Get the current start number status for today"""
+        global data
+        return {
+            "is_set": data.get("start_number_set_today", False),
+            "start_number": data.get("start_number")
+        }
+
+    @staticmethod
+    def renumber_orders(new_start_number: int) -> dict:
+        """Renumber all existing orders based on new start number"""
+        global orders, data, order_counter
+        
+        if new_start_number < 1:
+            raise ValueError("Start number must be at least 1")
+        
+        if not orders:
+            return {"success": True, "message": "No orders to renumber", "renumbered": 0}
+        
+        # Get the current first order number
+        current_first_order = orders[0]["id"]
+        
+        # Calculate the offset
+        offset = new_start_number - current_first_order
+        
+        # Renumber all orders
+        for order in orders:
+            order["id"] = order["id"] + offset
+        
+        # Update the counter
+        last_order_id = orders[-1]["id"]
+        data["counter"] = last_order_id
+        order_counter = data["counter"]
+        data["start_number"] = new_start_number
+        data["start_number_set_today"] = True
+        
+        save_data(data)
+        
+        return {
+            "success": True,
+            "message": f"Renumbered {len(orders)} orders",
+            "renumbered": len(orders),
+            "new_start_number": new_start_number,
+            "last_order": last_order_id
+        }
