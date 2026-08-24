@@ -2,41 +2,63 @@ from typing import List, Optional
 from datetime import datetime
 import json
 import os
+import pytz
 
-# File to store daily order data
-DATA_FILE = "orders_data.json"
+# ============================================================
+# PERSISTENT STORAGE
+# ============================================================
+DATA_DIR = os.environ.get('DATA_DIR', 'data')
+DATA_FILE = os.path.join(DATA_DIR, 'orders_data.json')
 
-# Load data from file if exists
+# Ensure data directory exists
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# ============================================================
+# TIMEZONE CONFIGURATION
+# ============================================================
+TIMEZONE_STR = os.environ.get('TIMEZONE', 'Africa/Addis_Ababa')
+TIMEZONE = pytz.timezone(TIMEZONE_STR)
+
+def get_current_time():
+    """Get current time in local timezone"""
+    return datetime.now(TIMEZONE)
+
+# ============================================================
+# DATA STORAGE
+# ============================================================
 def load_data():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r') as f:
             return json.load(f)
-    return {"date": None, "counter": 0, "orders": []}
+    return {"date": None, "counter": 0, "orders": [], "start_number": None}
 
-# Save data to file
 def save_data(data):
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
 # Initialize
 data = load_data()
-today = datetime.now().strftime("%Y-%m-%d")
+today = get_current_time().strftime("%Y-%m-%d")
 
 # Reset counter if new day
-if data["date"] != today:
+if data.get("date") != today:
     data["date"] = today
     data["counter"] = 0
-    data["orders"] = []
+    
+    data["start_number"] = None
     save_data(data)
 
 orders = data["orders"]
 order_counter = data["counter"]
 
+# ============================================================
+# MENU
+# ============================================================
 MENU = [
     {"id": 1, "name": "Special Pizza", "nameAm": "ስፔሻል ፒዛ"},
     {"id": 2, "name": "Meat Lovers (Beef) Pizza", "nameAm": "ሚት ላቨርስ ፒዛ"},
     {"id": 3, "name": "Al Tuna Pizza (Tuna with cheese)", "nameAm": "አል ቱና ፒዛ"},
-    {"id": 4, "name": "Tuna Pizza (Tuna without cheese)", "nameAm": "ቱና ፒዛ"},
+    {"id": 4, "name": "Steak Cheese Sandwich", "nameAm": "ስቲክ ቺዝ ሳንድዊች"},
     {"id": 5, "name": "Vegetable Pizza", "nameAm": "ቬጂቴብል ፒዛ"},
     {"id": 6, "name": "Margarita Pizza", "nameAm": "ማርጋሪታ ፒዛ"},
     {"id": 7, "name": "Special Burger", "nameAm": "ስፔሻል በርገር"},
@@ -55,13 +77,20 @@ MENU = [
     {"id": 20, "name": "Tuna Sandwich", "nameAm": "ቱና ሳንድዊች"},
     {"id": 21, "name": "Tuna Wrap", "nameAm": "ቱና ራፕ"},
     {"id": 22, "name": "Veggie Sandwich", "nameAm": "ቬጂ ሳንድዊች"},
-    {"id": 24, "name": "Club Sandwich", "nameAm": "ክለብ ሳንድዊች"},
-    {"id": 25, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
-    {"id": 27, "name": "Chicken Pesto Sandwich", "nameAm": "ቺክን ፔስቶ ሳንድዊች"},
-    {"id": 28, "name": "Chicken Pesto Wrap", "nameAm": "ቺክን ፔስቶ ራፕ"},
-    {"id": 29, "name": "Fish Sandwich", "nameAm": "ፊሽ ሳንድዊች"},
+    {"id": 23, "name": "Club Sandwich", "nameAm": "ክለብ ሳንድዊች"},
+    {"id": 24, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
+    {"id": 25, "name": "Chicken Pesto Sandwich", "nameAm": "ቺክን ፔስቶ ሳንድዊች"},
+    {"id": 26, "name": "Chicken Pesto Wrap", "nameAm": "ቺክን ፔስቶ ራፕ"},
+    {"id": 29, "name": "Meat Omelet", "nameAm": "ሚት ኦሜሌት"},
+    {"id": 30, "name": "Meat With Egg Omelet", "nameAm": "ሚት ዊዝ ኤግ ኦሜሌት"},
+    {"id": 31, "name": "Barbeque Chicken", "nameAm": "ባርቤኪው ቺክን"},
+    {"id": 32, "name": "Barbeque Beef", "nameAm": "ባርቤኪው ቢፍ"},
+    {"id": 33, "name": "Barbeque Pizza", "nameAm": "ባርቤኪው ፒዛ"},
 ]
 
+# ============================================================
+# HELPER FUNCTIONS
+# ============================================================
 def get_item_names(item_ids: List[int]) -> List[str]:
     names = []
     for item_id in item_ids:
@@ -80,6 +109,15 @@ def get_item_names_am(item_ids: List[int]) -> List[str]:
                 break
     return names
 
+def format_time(dt: datetime) -> str:
+    return dt.strftime("%I:%M %p")
+
+def format_date(dt: datetime) -> str:
+    return dt.strftime("%Y-%m-%d")
+
+# ============================================================
+# ORDER SERVICE
+# ============================================================
 class OrderService:
     @staticmethod
     def place_order(waiter: str, items: List[int]) -> dict:
@@ -89,11 +127,13 @@ class OrderService:
             raise ValueError("No items in order")
         
         # Check if new day
-        today = datetime.now().strftime("%Y-%m-%d")
-        if data["date"] != today:
+        now = get_current_time()
+        today = format_date(now)
+        if data.get("date") != today:
             data["date"] = today
             data["counter"] = 0
             data["orders"] = []
+            data["start_number"] = None
             orders = data["orders"]
         
         valid_ids = [item["id"] for item in MENU]
@@ -107,10 +147,11 @@ class OrderService:
             "id": order_counter,
             "items": items,
             "item_names": get_item_names(items),
-            "item_names_am": get_item_names_am(items),  # ← ADDED THIS
+            "item_names_am": get_item_names_am(items),
             "waiter": waiter,
-            "timestamp": datetime.now().strftime("%I:%M %p"),
+            "timestamp": format_time(now),
             "date": today,
+            "datetime": now.isoformat(),
             "status": "pending",
             "confirmed_at": None,
             "ready_at": None,
@@ -135,7 +176,7 @@ class OrderService:
     
     @staticmethod
     def get_today_orders() -> List[dict]:
-        today = datetime.now().strftime("%Y-%m-%d")
+        today = format_date(get_current_time())
         return [o for o in orders if o.get("date") == today]
     
     @staticmethod
@@ -143,7 +184,7 @@ class OrderService:
         for order in orders:
             if order["id"] == order_id:
                 order["status"] = "confirmed"
-                order["confirmed_at"] = datetime.now().strftime("%I:%M %p")
+                order["confirmed_at"] = format_time(get_current_time())
                 save_data(data)
                 return order
         return None
@@ -153,7 +194,7 @@ class OrderService:
         for order in orders:
             if order["id"] == order_id:
                 order["status"] = "ready"
-                order["ready_at"] = datetime.now().strftime("%I:%M %p")
+                order["ready_at"] = format_time(get_current_time())
                 save_data(data)
                 return order
         return None
@@ -163,7 +204,7 @@ class OrderService:
         for order in orders:
             if order["id"] == order_id:
                 order["status"] = "served"
-                order["served_at"] = datetime.now().strftime("%I:%M %p")
+                order["served_at"] = format_time(get_current_time())
                 save_data(data)
                 return order
         return None
@@ -186,6 +227,7 @@ class OrderService:
         orders = []
         data["orders"] = []
         data["counter"] = 0
+        data["start_number"] = None
         save_data(data)
         return count
     
@@ -216,9 +258,6 @@ class OrderService:
             "popularItems": popular
         }
 
-
-
-
     @staticmethod
     def place_order_with_names(waiter: str, items: List[int], item_names: List[str], item_names_am: List[str]) -> dict:
         global order_counter, orders, data
@@ -227,11 +266,13 @@ class OrderService:
             raise ValueError("No items in order")
         
         # Check if new day
-        today = datetime.now().strftime("%Y-%m-%d")
-        if data["date"] != today:
+        now = get_current_time()
+        today = format_date(now)
+        if data.get("date") != today:
             data["date"] = today
             data["counter"] = 0
             data["orders"] = []
+            data["start_number"] = None
             orders = data["orders"]
         
         data["counter"] += 1
@@ -242,8 +283,9 @@ class OrderService:
             "item_names": item_names,
             "item_names_am": item_names_am,
             "waiter": waiter,
-            "timestamp": datetime.now().strftime("%I:%M %p"),
+            "timestamp": format_time(now),
             "date": today,
+            "datetime": now.isoformat(),
             "status": "pending",
             "confirmed_at": None,
             "ready_at": None,
@@ -252,4 +294,30 @@ class OrderService:
         data["orders"].append(order)
         orders = data["orders"]
         save_data(data)
-        return order    
+        return order
+
+    @staticmethod
+    def set_start_number(start_number: int) -> dict:
+        """Set the starting order number for the day"""
+        global data, order_counter, orders
+        
+        if start_number < 1:
+            raise ValueError("Start number must be at least 1")
+        
+        # Check if new day
+        now = get_current_time()
+        today = format_date(now)
+        if data.get("date") != today:
+            data["date"] = today
+            data["counter"] = 0
+            data["orders"] = []
+            data["start_number"] = None
+            orders = data["orders"]
+        
+        # Set the start number
+        data["start_number"] = start_number
+        data["counter"] = start_number - 1  # Counter starts one less so first order is start_number
+        order_counter = data["counter"]
+        save_data(data)
+        
+        return {"success": True, "start_number": start_number}
