@@ -82,11 +82,12 @@ MENU = [
     {"id": 24, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
     {"id": 25, "name": "Chicken Pesto Sandwich", "nameAm": "ቺክን ፔስቶ ሳንድዊች"},
     {"id": 26, "name": "Chicken Pesto Wrap", "nameAm": "ቺክን ፔስቶ ራፕ"},
-    {"id": 29, "name": "Meat Omelet", "nameAm": "ሚት ኦሜሌት"},
-    {"id": 30, "name": "Meat With Egg Omelet", "nameAm": "ሚት ዊዝ ኤግ ኦሜሌት"},
+    # REMOVED: Meat Omelet (id: 29) and Meat With Egg Omelet (id: 30)
     {"id": 31, "name": "Barbeque Chicken", "nameAm": "ባርቤኪው ቺክን"},
     {"id": 32, "name": "Barbeque Beef", "nameAm": "ባርቤኪው ቢፍ"},
     {"id": 33, "name": "Barbeque Pizza", "nameAm": "ባርቤኪው ፒዛ"},
+    # ADDED: Chicken Pizza
+    {"id": 34, "name": "Chicken Pizza", "nameAm": "ቺክን ፒዛ"},
 ]
 
 # ============================================================
