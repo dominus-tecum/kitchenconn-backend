@@ -167,7 +167,7 @@ class OrderService:
     
     @staticmethod
     def get_pending() -> List[dict]:
-        return [o for o in orders if o["status"] in ["pending", "confirmed"]]
+        return orders
     
     @staticmethod
     def get_ready() -> List[dict]:
