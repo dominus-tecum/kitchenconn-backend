@@ -59,7 +59,7 @@ MENU = [
     {"id": 1, "name": "Special Pizza", "nameAm": "ስፔሻል ፒዛ"},
     {"id": 2, "name": "Meat Lovers (Beef) Pizza", "nameAm": "ሚት ላቨርስ ፒዛ"},
     {"id": 3, "name": "Al Tuna Pizza (Tuna with cheese)", "nameAm": "አል ቱና ፒዛ"},
-    {"id": 4, "name": "Steak Cheese Sandwich", "nameAm": "ስቲክ ቺዝ ሳንድዊች"},
+    # ❌ REMOVED: Steak Cheese Sandwich (id: 4)
     {"id": 5, "name": "Vegetable Pizza", "nameAm": "ቬጂቴብል ፒዛ"},
     {"id": 6, "name": "Margarita Pizza", "nameAm": "ማርጋሪታ ፒዛ"},
     {"id": 7, "name": "Special Burger", "nameAm": "ስፔሻል በርገር"},
@@ -80,14 +80,17 @@ MENU = [
     {"id": 22, "name": "Veggie Sandwich", "nameAm": "ቬጂ ሳንድዊች"},
     {"id": 23, "name": "Club Sandwich", "nameAm": "ክለብ ሳንድዊች"},
     {"id": 24, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
-    {"id": 25, "name": "Chicken Pesto Sandwich", "nameAm": "ቺክን ፔስቶ ሳንድዊች"},
-    {"id": 26, "name": "Chicken Pesto Wrap", "nameAm": "ቺክን ፔስቶ ራፕ"},
+    # ❌ REMOVED: Chicken Pesto Sandwich (id: 25)
+    # ❌ REMOVED: Chicken Pesto Wrap (id: 26)
     # REMOVED: Meat Omelet (id: 29) and Meat With Egg Omelet (id: 30)
-    {"id": 31, "name": "Barbeque Chicken", "nameAm": "ባርቤኪው ቺክን"},
-    {"id": 32, "name": "Barbeque Beef", "nameAm": "ባርቤኪው ቢፍ"},
-    {"id": 33, "name": "Barbeque Pizza", "nameAm": "ባርቤኪው ፒዛ"},
-    # ADDED: Chicken Pizza
-    {"id": 34, "name": "Chicken Pizza", "nameAm": "ቺክን ፒዛ"},
+    # 🔥 MOVED FROM BBQ: Now listed as pizza varieties
+    {"id": 31, "name": "Barbeque Chicken Pizza", "nameAm": "ባርቤኪው ቺክን ፒዛ"},
+    {"id": 32, "name": "Barbeque Beef Pizza", "nameAm": "ባርቤኪው ቢፍ ፒዛ"},
+    # ❌ REMOVED: Barbeque Pizza (id: 33)
+    # ❌ REMOVED: Chicken Pizza (id: 34)
+    # 🆕 NEW ITEMS
+    {"id": 35, "name": "Lasagna with Beef", "nameAm": "ላሳኛ ከቢፍ"},
+    {"id": 36, "name": "Lasagna with Chicken", "nameAm": "ላሳኛ ከቺክን"},
 ]
 
 # ============================================================
