@@ -56,41 +56,37 @@ order_counter = data["counter"]
 # MENU
 # ============================================================
 MENU = [
+    # 🍕 PIZZAS
     {"id": 1, "name": "Special Pizza", "nameAm": "ስፔሻል ፒዛ"},
-    {"id": 2, "name": "Meat Lovers (Beef) Pizza", "nameAm": "ሚት ላቨርስ ፒዛ"},
-    {"id": 3, "name": "Al Tuna Pizza (Tuna with cheese)", "nameAm": "አል ቱና ፒዛ"},
-    # ❌ REMOVED: Steak Cheese Sandwich (id: 4)
-    {"id": 5, "name": "Vegetable Pizza", "nameAm": "ቬጂቴብል ፒዛ"},
-    {"id": 6, "name": "Margarita Pizza", "nameAm": "ማርጋሪታ ፒዛ"},
-    {"id": 7, "name": "Special Burger", "nameAm": "ስፔሻል በርገር"},
-    {"id": 8, "name": "Double Burger", "nameAm": "ድብል በርገር"},
-    {"id": 9, "name": "Cheese Burger", "nameAm": "ቺዝ በርገር"},
-    {"id": 10, "name": "Beef Burger", "nameAm": "ቢፍ በርገር"},
-    {"id": 11, "name": "Egg Twist", "nameAm": "ኤግ ትዊስት"},
-    {"id": 12, "name": "Tuna With Cheese Sandwich", "nameAm": "ቱና ዊዝ ቺዝ ሳንድዊች"},
-    {"id": 13, "name": "Chicken Burger", "nameAm": "ቺክን በርገር"},
-    {"id": 14, "name": "Hummus Pizza", "nameAm": "ሁመስ ፒዛ"},
-    {"id": 15, "name": "Special Fasting Pizza", "nameAm": "ስፔሻል ፆም ፒዛ"},
-    {"id": 16, "name": "Chicken Wrap", "nameAm": "ቺክን ራፕ"},
-    {"id": 17, "name": "Veggie Wrap", "nameAm": "ቬጂ ራፕ"},
-    {"id": 18, "name": "Special Veggie Wrap", "nameAm": "ስፔሻል ቬጂ ራፕ"},
-    {"id": 19, "name": "Hummus", "nameAm": "ሁመስ"},
-    {"id": 20, "name": "Tuna Sandwich", "nameAm": "ቱና ሳንድዊች"},
-    {"id": 21, "name": "Tuna Wrap", "nameAm": "ቱና ራፕ"},
-    {"id": 22, "name": "Veggie Sandwich", "nameAm": "ቬጂ ሳንድዊች"},
-    {"id": 23, "name": "Club Sandwich", "nameAm": "ክለብ ሳንድዊች"},
-    {"id": 24, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
-    # ❌ REMOVED: Chicken Pesto Sandwich (id: 25)
-    # ❌ REMOVED: Chicken Pesto Wrap (id: 26)
-    # REMOVED: Meat Omelet (id: 29) and Meat With Egg Omelet (id: 30)
-    # 🔥 MOVED FROM BBQ: Now listed as pizza varieties
-    {"id": 31, "name": "Barbeque Chicken Pizza", "nameAm": "ባርቤኪው ቺክን ፒዛ"},
-    {"id": 32, "name": "Barbeque Beef Pizza", "nameAm": "ባርቤኪው ቢፍ ፒዛ"},
-    # ❌ REMOVED: Barbeque Pizza (id: 33)
-    # ❌ REMOVED: Chicken Pizza (id: 34)
-    # 🆕 NEW ITEMS
-    {"id": 35, "name": "Lasagna with Beef", "nameAm": "ላሳኛ ከቢፍ"},
-    {"id": 36, "name": "Lasagna with Chicken", "nameAm": "ላሳኛ ከቺክን"},
+    {"id": 2, "name": "Meat Lovers Pizza", "nameAm": "ሚት ላቨርስ ፒዛ"},
+    {"id": 3, "name": "Al Tuna Pizza", "nameAm": "ቱና ፒዛ"},
+    {"id": 4, "name": "Margherita Pizza", "nameAm": "ማርጋሪታ ፒዛ"},
+    {"id": 5, "name": "Chicken Pizza", "nameAm": "ቺክን ፒዛ"},
+    {"id": 6, "name": "BBQ Beef Pizza", "nameAm": "ባርቤኪው የበሬ ሥጋ ፒዛ"},
+    {"id": 7, "name": "BBQ Chicken Pizza", "nameAm": "ባርቤኪው ቺክን ፒዛ"},
+    {"id": 8, "name": "Vegetable Pizza", "nameAm": "የአትክልት ፒዛ"},
+    {"id": 9, "name": "Special Fasting Pizza", "nameAm": "ስፔሻል የጾም ፒዛ"},
+    {"id": 10, "name": "Hummus Pizza", "nameAm": "ሁሙስ ፒዛ"},
+    # 🍝 LASAGNA
+    {"id": 11, "name": "Beef Lasagna", "nameAm": "የበሬ ሥጋ ላዛኛ"},
+    {"id": 12, "name": "Chicken Lasagna", "nameAm": "የዶሮ ላዛኛ"},
+    # 🍔 BURGERS
+    {"id": 13, "name": "Special Burger", "nameAm": "ስፔሻል በርገር"},
+    {"id": 14, "name": "Double Burger", "nameAm": "ድርብ በርገር"},
+    {"id": 15, "name": "Cheese Burger", "nameAm": "ቺዝ በርገር"},
+    {"id": 16, "name": "Beef Burger", "nameAm": "የበሬ ሥጋ በርገር"},
+    # 🥪 SANDWICHES
+    {"id": 18, "name": "BBQ Chicken Sandwich", "nameAm": "ባርቤኪው ቺክን ሳንድዊች"},
+    {"id": 19, "name": "Steak Sandwich", "nameAm": "ስቴክ ሳንድዊች"},
+    {"id": 20, "name": "Steak BBQ Sandwich", "nameAm": "ስቴክ ባርቤኪው ሳንድዊች"},
+    {"id": 21, "name": "Club Sandwich", "nameAm": "ክለብ ሳንድዊች"},
+    {"id": 22, "name": "Tuna Sandwich", "nameAm": "ቱና ሳንድዊች"},
+    {"id": 23, "name": "Chicken Sandwich", "nameAm": "ቺክን ሳንድዊች"},
+    # 🌯 WRAPS
+    {"id": 24, "name": "Tuna Wrap", "nameAm": "ቱና ራፕ"},
+    {"id": 25, "name": "Chicken Wrap", "nameAm": "ቺክን ራፕ"},
+    {"id": 26, "name": "Special Wrap", "nameAm": "ስፔሻል ራፕ"},
+    {"id": 27, "name": "Veggie Wrap", "nameAm": "የአትክልት ራፕ"},
 ]
 
 # ============================================================
